@@ -1,0 +1,45 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>false</DelaySign>
+		<AssemblyOriginatorKeyFile>..\ffmpegsharp.snk</AssemblyOriginatorKeyFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<Version>1.0.1</Version>
+		<IncludeSymbols>true</IncludeSymbols>
+		<IncludeSource>true</IncludeSource>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<EmbedAllSources>true</EmbedAllSources>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+	
+	<!--Build ramdrive tmp WPF project-->
+	<PropertyGroup Condition=" '$(BuildRamdrive)' != '' AND '$(MSBuildProjectFile)' != '' AND '$(RamdriveBuildInit)' == '' AND $(MSBuildProjectName.EndsWith('_wpftmp')) ">
+		<BaseIntermediateOutputPath>$(BuildRamdrive)\Projects\$(SolutionName)\$(_TargetAssemblyProjectName)$(MSBuildProjectExtension)\obj\</BaseIntermediateOutputPath>
+		<IntermediateOutputPath>$(BuildRamdrive)\Projects\$(SolutionName)\$(_TargetAssemblyProjectName)$(MSBuildProjectExtension)\obj\$(Configuration)\</IntermediateOutputPath>
+		<MSBuildProjectExtensionsPath>$(BuildRamdrive)\Projects\$(SolutionName)\$(_TargetAssemblyProjectName)$(MSBuildProjectExtension)\obj\</MSBuildProjectExtensionsPath>
+		<RamdriveBuildInit>true</RamdriveBuildInit>
+	</PropertyGroup>
+	<!--Build ramdrive for all other projects-->
+	<PropertyGroup Condition=" '$(BuildRamdrive)' != '' AND '$(MSBuildProjectFile)' != '' AND '$(RamdriveBuildInit)' == '' ">
+		<BaseIntermediateOutputPath>$(BuildRamdrive)\Projects\$(SolutionName)\$(MSBuildProjectFile)\obj\</BaseIntermediateOutputPath>
+		<IntermediateOutputPath>$(BuildRamdrive)\Projects\$(SolutionName)\$(MSBuildProjectFile)\obj\$(Configuration)\</IntermediateOutputPath>
+		<MSBuildProjectExtensionsPath>$(BuildRamdrive)\Projects\$(SolutionName)\$(MSBuildProjectFile)\obj\</MSBuildProjectExtensionsPath>
+		<RamdriveBuildInit>true</RamdriveBuildInit>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(MSBuildProjectDirectory)'!='' ">
+		<SourceRoot Include="$(MSBuildProjectDirectory)/"/>
+	</ItemGroup>
+
+
+	<!--Release-->
+	<PropertyGroup Condition=" '$(PathMap)'!='' AND '$(Configuration)'=='Release'">
+		<PathMap>$(PathMap),$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(PathMap)'=='' AND '$(Configuration)'=='Release'">
+		<PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+	</PropertyGroup>
+</Project>

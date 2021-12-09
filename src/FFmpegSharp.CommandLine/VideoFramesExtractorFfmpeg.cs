@@ -17,7 +17,6 @@ namespace FFmpegSharp.CommandLine
 		public FFmpegCommandLineResult<MemoryStream> GetFrameStreamForVideoFile(string fileName, TimeSpan frameTime)
 		{
 			//ffmpeg -v quiet -ss 00:00:01.000 -i "filename" -an -frames:v 1 -f image2  pipe:
-			//
 			var args = new CommandLineArgumentsBuilder();
 			args.AppendArguments("-v", "quiet", "-ss");
 			args.AppendArgumentFormat(@"{0:hh\:mm\:ss\.fff}", frameTime);
@@ -44,9 +43,7 @@ namespace FFmpegSharp.CommandLine
 		public FFmpegCommandLineResult<byte[]> GetFrameDataForVideoFile(string fileName, TimeSpan frameTime)
 		{
 			var tmp = GetFrameStreamForVideoFile(fileName, frameTime);
-
-			var ret = new FFmpegCommandLineResult<byte[]>((tmp.Result != null) ? tmp.Result.ToArray() : null, tmp.ErrorText);
-			return ret;
+			return tmp.Convert(x => (x != null) ? x.ToArray() : null);
 		}
 	}
 }

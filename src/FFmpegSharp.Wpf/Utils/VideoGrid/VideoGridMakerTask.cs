@@ -77,14 +77,9 @@ namespace FFmpegSharp.Wpf.Utils.VideoGrid
 				for (int x = 0; x < _parameters.XCount; x++)
 				{
 					time += timePart;
-					var frameResult = frameExtractor.GetFrameDataForVideoFile(_fileName, time);
-					BitmapImage img = new BitmapImage();
-					img.BeginInit();
-					img.StreamSource = new MemoryStream(frameResult.Result);
-					img.EndInit();
-					img.Freeze();
+					var frameResult = frameExtractor.GetFrameBitmapImageForVideoFile(_fileName, time);
 					_times[x, y] = time;
-					_grid[x, y] = img;
+					_grid[x, y] = frameResult.Result;
 				}
 			}
 

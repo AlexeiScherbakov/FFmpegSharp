@@ -6,7 +6,9 @@ using System.Text;
 
 namespace FFmpegSharp.CommandLine
 {
-
+	/// <summary>
+	/// ffprobe utility
+	/// </summary>
 	public class VideoInformationExtractorFfprobe
 	{
 		private readonly string _app;
@@ -16,6 +18,11 @@ namespace FFmpegSharp.CommandLine
 			_app = app;
 		}
 
+		/// <summary>
+		/// Get duration of video container
+		/// </summary>
+		/// <param name="fileName">video fileName</param>
+		/// <returns></returns>
 		public FFmpegCommandLineResult<TimeSpan?> GetContainerDuration(string fileName)
 		{
 			//ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 input.mp4

@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net46;netcoreapp3.1;net5.0-windows;net6.0-windows</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<UseWPF>true</UseWPF> 
 	</PropertyGroup>
@@ -9,6 +9,4 @@
   <ItemGroup>
     <ProjectReference Include="..\FFmpegSharp.CommandLine\FFmpegSharp.CommandLine.csproj" />
   </ItemGroup>
-
-	<Import Project="..\ffmpegsharp.targets" />
 </Project>
